@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script>
+    var map; //NEW!
+    var myLatlng = new google.maps.LatLng(52.518903284520796,-1.450427753967233);
+    function initialize() {
+        var mapOptions = {
+            zoom: 13,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(document.getElementById('map_canvas'), mapOptions); //NEW!(SMALL EDIT)
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: 'Beauty Courses 4 U',
+            icon: 'http://www.google.com/intl/en_us/mapfiles/ms/micons/pink-dot.png'
+        });
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+</head>
+<style>
+#menu {display: none;}
+.sliderContainer {
+position: relative;
+overflow: hidden;
+width: 300px;
+height: 300px;
+}
+.sliderViewer {
+position: absolute;
+left: 0px;
+overflow-x: hidden;
+width: 900px;
+height: 300px;
+}
+.sliderViewer>div {
+width: 300px;
+height: 300px;
+float: left;
+overflow: hidden;
+}
+#map_canvas {
+width: 200px;
+height: 200px;
+margin: 0 auto 0 auto;
+}
+.sliderViewer>div:nth-child(1) {background: red;}
+.sliderViewer>div:nth-child(2) {background: yellow;}
+.sliderViewer>div:nth-child(3) {background: blue;}
+a {cursor: pointer;}
+</style>
+<body>
+<a id="showMenu">Show menu (click here)</a>
+<div id="menu">
+<ul>
+<li id="link1"><a>link1</a></li>
+<li id="link2"><a>link2 (click on this link)</a></li>
+<li id="link3"><a>link3</a></li>
+</ul>
+<div class="sliderContainer">
+<div class="sliderViewer">
+      <div>some conetent in panel 1</div>
+      <div>The map is off center:
+      <div id="map_canvas"></div></div>
+      <div>some conetent in panel 3</div>
+</div>
+</div>
+</div>
+</body>
+<script>
+$( document ).ready(function(){
+    $('#showMenu').on('click', function(){
+        $('#menu').show(500);
+    })
+    $('#link1').on('click',function(){
+        $('.sliderViewer').animate({left: 0}, 1000);
+        })
+    $('#link2').on('click',function(){
+        $('.sliderViewer').animate({left: -300}, 1000);
+                    google.maps.event.trigger(map, 'resize'); //NEW!
+                    map.setCenter(myLatlng); //NEW!
+    })
+    $('#link3').on('click',function(){
+        $('.sliderViewer').animate({left: -600}, 1000);
+    })
+ });
+ </script>
+ </html>
